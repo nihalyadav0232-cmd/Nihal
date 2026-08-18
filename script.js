@@ -2,30 +2,55 @@ const player = document.getElementById("player");
 const enemy = document.getElementById("enemy");
 const scoreText = document.getElementById("score");
 
+const leftBtn = document.getElementById("leftBtn");
+const rightBtn = document.getElementById("rightBtn");
+
 let playerX = 125;
 let enemyY = -100;
 let enemyX = Math.floor(Math.random() * 250);
 let score = 0;
 let gameOver = false;
 
+// Player position
+player.style.left = playerX + "px";
+
+// LEFT button
+leftBtn.addEventListener("click", function () {
+    if (playerX > 0) {
+        playerX -= 20;
+        player.style.left = playerX + "px";
+    }
+});
+
+// RIGHT button
+rightBtn.addEventListener("click", function () {
+    if (playerX < 250) {
+        playerX += 20;
+        player.style.left = playerX + "px";
+    }
+});
+
+// Keyboard control
 document.addEventListener("keydown", function(event) {
 
     if (event.key === "ArrowLeft" && playerX > 0) {
-        playerX -= 15;
+        playerX -= 20;
     }
 
     if (event.key === "ArrowRight" && playerX < 250) {
-        playerX += 15;
+        playerX += 20;
     }
 
     player.style.left = playerX + "px";
 });
 
+// Enemy movement
 function gameLoop() {
 
     if (gameOver) return;
 
     enemyY += 5;
+
     enemy.style.top = enemyY + "px";
     enemy.style.left = enemyX + "px";
 
@@ -46,6 +71,7 @@ function gameLoop() {
     if (enemyY > 500) {
         enemyY = -100;
         enemyX = Math.floor(Math.random() * 250);
+
         score++;
         scoreText.innerText = score;
     }
@@ -54,16 +80,3 @@ function gameLoop() {
 }
 
 gameLoop();
-document.getElementById("leftBtn").addEventListener("click", function () {
-    if (playerX > 0) {
-        playerX -= 20;
-        player.style.left = playerX + "px";
-    }
-});
-
-document.getElementById("rightBtn").addEventListener("click", function () {
-    if (playerX < 250) {
-        playerX += 20;
-        player.style.left = playerX + "px";
-    }
-});
