@@ -54,3 +54,16 @@ function gameLoop() {
 }
 
 gameLoop();
+document.getElementById("leftBtn").addEventListener("click", function () {
+    if (playerX > 0) {
+        playerX -= 20;
+        player.style.left = playerX + "px";
+    }
+});
+
+document.getElementById("rightBtn").addEventListener("click", function () {
+    if (playerX < 250) {
+        playerX += 20;
+        player.style.left = playerX + "px";
+    }
+});
