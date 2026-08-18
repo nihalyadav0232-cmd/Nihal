@@ -85,7 +85,7 @@ gameLoop();
     width: 6px;
     height: 70px;
     background: white;
-    left: 147px;
+    left: 50%;
 }
 
 .line1 {
