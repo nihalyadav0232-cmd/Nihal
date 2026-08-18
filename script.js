@@ -80,3 +80,22 @@ function gameLoop() {
 }
 
 gameLoop();
+.roadLine {
+    position: absolute;
+    width: 6px;
+    height: 70px;
+    background: white;
+    left: 147px;
+}
+
+.line1 {
+    top: 0;
+}
+
+.line2 {
+    top: 200px;
+}
+
+.line3 {
+    top: 400px;
+}
