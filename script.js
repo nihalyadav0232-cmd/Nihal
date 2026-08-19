@@ -1,101 +1,123 @@
 const player = document.getElementById("player");
 const enemy = document.getElementById("enemy");
+
 const scoreText = document.getElementById("score");
+const speedText = document.getElementById("speed");
 
 const leftBtn = document.getElementById("leftBtn");
 const rightBtn = document.getElementById("rightBtn");
 
-let playerX = 125;
+const lines = document.querySelectorAll(".road-line");
+
+let playerX = 136;
 let enemyY = -100;
-let enemyX = Math.floor(Math.random() * 250);
+let enemyX = 80;
+
 let score = 0;
+let speed = 5;
 let gameOver = false;
 
-// Player position
-player.style.left = playerX + "px";
+const roadWidth = 330;
+const carWidth = 58;
 
-// LEFT button
-leftBtn.addEventListener("click", function () {
-    if (playerX > 0) {
-        playerX -= 20;
+// Player movement
+function moveLeft() {
+    if (playerX > 50) {
+        playerX -= 25;
         player.style.left = playerX + "px";
     }
-});
+}
 
-// RIGHT button
-rightBtn.addEventListener("click", function () {
-    if (playerX < 250) {
-        playerX += 20;
+function moveRight() {
+    if (playerX < roadWidth - carWidth - 50) {
+        playerX += 25;
         player.style.left = playerX + "px";
     }
-});
+}
 
-// Keyboard control
+leftBtn.addEventListener("click", moveLeft);
+rightBtn.addEventListener("click", moveRight);
+
+// Keyboard
 document.addEventListener("keydown", function(event) {
 
-    if (event.key === "ArrowLeft" && playerX > 0) {
-        playerX -= 20;
+    if (event.key === "ArrowLeft") {
+        moveLeft();
     }
 
-    if (event.key === "ArrowRight" && playerX < 250) {
-        playerX += 20;
+    if (event.key === "ArrowRight") {
+        moveRight();
     }
-
-    player.style.left = playerX + "px";
 });
 
-// Enemy movement
+// Game loop
 function gameLoop() {
 
     if (gameOver) return;
 
-    enemyY += 5;
+    // Enemy movement
+    enemyY += speed;
 
     enemy.style.top = enemyY + "px";
     enemy.style.left = enemyX + "px";
 
+    // Moving road
+    lines.forEach(line => {
+
+        let top = parseInt(
+            window.getComputedStyle(line).top
+        );
+
+        top += speed;
+
+        if (top > 580) {
+            top = -100;
+        }
+
+        line.style.top = top + "px";
+    });
+
     // Collision
     if (
-        enemyY > 400 &&
-        enemyY < 480 &&
-        enemyX < playerX + 50 &&
-        enemyX + 50 > playerX
+        enemyY + 75 > 450 &&
+        enemyY < 550 &&
+        enemyX < playerX + carWidth &&
+        enemyX + carWidth > playerX
     ) {
+
         gameOver = true;
-        alert("Game Over! Score: " + score);
+
+        alert(
+            "🏁 GAME OVER!\n\nYour Score: " + score
+        );
+
         location.reload();
         return;
     }
 
     // Enemy passed
-    if (enemyY > 500) {
+    if (enemyY > 580) {
+
         enemyY = -100;
-        enemyX = Math.floor(Math.random() * 250);
+
+        // 3 lanes
+        const lanes = [60, 136, 212];
+
+        enemyX =
+            lanes[Math.floor(Math.random() * lanes.length)];
 
         score++;
+
         scoreText.innerText = score;
+
+        // Speed increases
+        if (score % 5 === 0) {
+            speed += 1;
+            speedText.innerText = speed;
+        }
     }
 
     requestAnimationFrame(gameLoop);
 }
 
 gameLoop();
-.roadLine {
-    position: absolute;
-    width: 6px;
-    height: 70px;
-    background: white;
-    left: 50%;
-}
-
-.line1 {
-    top: 0;
-}
-
-.line2 {
-    top: 200px;
-}
-
-.line3 {
-    top: 400px;
-}
