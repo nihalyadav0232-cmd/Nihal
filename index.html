@@ -1,30 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Car Racing Game</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Street Racer</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <h1>🏎️ Car Racing Game</h1>
+    <div class="game-container">
 
-    <div id="game">
-        <div class="roadLine line1"></div>
-<div class="roadLine line2"></div>
-<div class="roadLine line3"></div>
-        <div id="player"></div>
-        <div id="enemy"></div>
-    </div>
+        <div class="top-bar">
+            <div>🏆 Score: <span id="score">0</span></div>
+            <div>⚡ Speed: <span id="speed">1</span></div>
+        </div>
 
-    <p>Score: <span id="score">0</span></p>
+        <div id="game">
 
-    <div class="controls">
-        <button id="leftBtn">⬅️ LEFT</button>
-        <button id="rightBtn">RIGHT ➡️</button>
+            <div class="road-line line1"></div>
+            <div class="road-line line2"></div>
+            <div class="road-line line3"></div>
+            <div class="road-line line4"></div>
+
+            <div id="player" class="car">🚘</div>
+            <div id="enemy" class="car enemy">🚙</div>
+
+        </div>
+
+        <div class="controls">
+            <button id="leftBtn">⬅</button>
+            <button id="rightBtn">➡</button>
+        </div>
+
     </div>
 
     <script src="script.js"></script>
-
 </body>
 </html>
